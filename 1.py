@@ -14,19 +14,19 @@ def get_img(img_path):
     return x
 
 # this is the size of our encoded representations
-encoding_dim = 32  # 32 floats -> compression of factor 24.5, assuming the input is 784 floats
+encoding_dim = 8192  # 32 floats -> compression of factor 24.5, assuming the input is 784 floats
 # this is our input placeholder
 input_img = Input(shape=(16384,))
 # "encoded" is the encoded representation of the input
-encoded = Dense(32, activation='relu')(input_img)
-encoded = Dense(32, activation='relu')(encoded)
-# encoded = Dense(2048, activation='relu')(encoded)
-# encoded = Dense(512, activation='relu')(encoded)
+encoded = Dense(8192, activation='relu')(input_img)
+encoded = Dense(4096, activation='relu')(encoded)
+encoded = Dense(2048, activation='relu')(encoded)
+encoded = Dense(512, activation='relu')(encoded)
 
 # "decoded" is the lossy reconstruction of the input
-# decoded = Dense(2048, activation='sigmoid')(encoded)
-# decoded = Dense(4096, activation='sigmoid')(decoded)
-decoded = Dense(32, activation='sigmoid')(encoded)
+decoded = Dense(2048, activation='sigmoid')(encoded)
+decoded = Dense(4096, activation='sigmoid')(decoded)
+decoded = Dense(8192, activation='sigmoid')(decoded)
 decoded = Dense(16384, activation='sigmoid')(decoded)
 
 # this model maps an input to its reconstruction
